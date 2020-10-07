@@ -60,6 +60,33 @@ module.exports = {
 
     // endregion
 
+    // region enforce emico components
+    
+    'react/forbid-elements': [
+      'error',
+      {
+        forbid: [
+          {
+            element: 'img',
+            message:
+              'use <Image> instead so that the correct image CDN is used',
+          },
+          {
+            element: 'a',
+            message:
+              'use <Link> instead to make sure internal linking works, and analytics is working as expected',
+          },
+          {
+            element: 'button',
+            message:
+              'use <ButtonPrimary> or <ButtonSecondary> instead to make sure the correct styling is used, or use <ButtonUnstyled> as a base',
+          },
+        ],
+      },
+    ],
+
+    // endregion 
+
     // region Code style
 
     // Disable specific member delimiter style for interfaces and type literals.
