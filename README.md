@@ -33,3 +33,10 @@ To apply custom rules remove the eslint configuration from your `package.json`, 
 ```
 
 That's it! You can override the settings by editing the `.eslintrc.json` file. Learn more about [configuring ESLint](http://eslint.org/docs/user-guide/configuring) on the ESLint website.
+
+## Options
+
+These options can be enabled/disabled using env variables.
+
+`PRETTIER` Enable or disable prettier rules in eslint
+`EMICO_COMPONENT_LIBRARY` Enable or disable Emico internal component library rules

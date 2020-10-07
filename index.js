@@ -11,6 +11,8 @@
 // be fixed. We just don't want Prettier to put a red underline underneath all
 // code not yet Prettier formatted.
 const ENABLE_PRETTIER = process.env.PRETTIER === 'true'
+const ENABLE_EMICO_COMPONENT_LIBRARY =
+  process.env.EMICO_COMPONENT_LIBRARY === 'true'
 
 module.exports = {
   root: true,
@@ -62,28 +64,30 @@ module.exports = {
 
     // region enforce emico components
     
-    'react/forbid-elements': [
-      'error',
-      {
-        forbid: [
+    'react/forbid-elements': ENABLE_EMICO_COMPONENT_LIBRARY
+      ? [
+          'error',
           {
-            element: 'img',
-            message:
-              'use <Image> instead so that the correct image CDN is used',
+            forbid: [
+              {
+                element: 'img',
+                message:
+                  'use <Image> instead so that the correct image CDN is used',
+              },
+              {
+                element: 'a',
+                message:
+                  'use <Link> instead to make sure internal linking works, and analytics is working as expected',
+              },
+              {
+                element: 'button',
+                message:
+                  'use <ButtonPrimary> or <ButtonSecondary> instead to make sure the correct styling is used, or use <ButtonUnstyled> as a base',
+              },
+            ],
           },
-          {
-            element: 'a',
-            message:
-              'use <Link> instead to make sure internal linking works, and analytics is working as expected',
-          },
-          {
-            element: 'button',
-            message:
-              'use <ButtonPrimary> or <ButtonSecondary> instead to make sure the correct styling is used, or use <ButtonUnstyled> as a base',
-          },
-        ],
-      },
-    ],
+        ]
+      : 'off',
 
     // endregion 
 
