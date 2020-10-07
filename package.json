@@ -1,0 +1,9 @@
+{
+  "name": "@emico/eslint-config",
+  "version": "2.0.0",
+  "description": "Emico ESLint config for consistent code style and code quality.",
+  "main": "index.js",
+  "repository": "https://github.com/EmicoEcommerce/eslint-config",
+  "author": "Emico <info@emico.nl>",
+  "license": "MIT"
+}
