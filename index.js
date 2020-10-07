@@ -154,6 +154,8 @@ module.exports = {
 
     'no-implicit-coercion': 'error',
 
+    'import/no-useless-path-segments': 'error',
+
     // endregion
 
     // Every dependency should be in the package.json
