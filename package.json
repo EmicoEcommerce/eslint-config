@@ -1,9 +1,31 @@
 {
   "name": "@emico/eslint-config",
-  "version": "2.0.0",
   "description": "Emico ESLint config for consistent code style and code quality.",
   "main": "index.js",
   "repository": "https://github.com/EmicoEcommerce/eslint-config",
   "author": "Emico <info@emico.nl>",
-  "license": "MIT"
+  "license": "MIT",
+  "version": "2.0.0",
+  "files": [
+    "index.js"
+  ],
+  "dependencies": {
+    "@typescript-eslint/eslint-plugin": "2.x",
+    "@typescript-eslint/parser": "2.x",
+    "babel-eslint": "10.x",
+    "confusing-browser-globals": "^1.0.9",
+    "eslint": "6.x",
+    "eslint-config-prettier": "^6.9.0",
+    "eslint-config-react-app": "^5.0.2",
+    "eslint-plugin-flowtype": "3.x",
+    "eslint-plugin-import": "2.x",
+    "eslint-plugin-jsx-a11y": "6.x",
+    "eslint-plugin-prettier": "^3.1.2",
+    "eslint-plugin-react": "7.x",
+    "eslint-plugin-react-hooks": "1.x",
+    "eslint-plugin-you-dont-need-lodash-underscore": "^6.10.0"
+  },
+  "peerDependencies": {
+    "typescript": "^3.9.3"
+  }
 }
