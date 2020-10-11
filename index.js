@@ -42,6 +42,18 @@ module.exports = {
     // Codebase consistency and ease of use
     'react/prefer-stateless-function': 'warn',
 
+    // Swift removed ++ and -- completely for various good reasons:
+    // https://github.com/apple/swift-evolution/blob/master/proposals/0004-remove-pre-post-inc-decrement.md#disadvantages-of-these-operators
+    // Use one of the following instead:
+    // foo(i++) -> foo(i); i += 1
+    // foo(++i) -> i += 1; foo(i)
+    // i-- -> i -= 1
+    // for (let i = 0; i < arr.length; i++) -> for (let i = 0; i < arr.length; i += 1)
+    // NOTE: For the last one, prefer arr.forEach(func)/map/reduce instead.
+    'no-plusplus': 'warn',
+
+    // TODO: Rule to encourage foreach/map/reduce over for
+
     // endregion
 
     // region Types
@@ -63,7 +75,7 @@ module.exports = {
     // endregion
 
     // region enforce emico components
-    
+
     'react/forbid-elements': ENABLE_EMICO_COMPONENT_LIBRARY
       ? [
           'error',
@@ -89,7 +101,7 @@ module.exports = {
         ]
       : 'off',
 
-    // endregion 
+    // endregion
 
     // region Code style
 
