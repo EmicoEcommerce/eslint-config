@@ -46,8 +46,14 @@ module.exports = {
 
     // region Types
 
-    // Use implicit return types to speed up changes
+    // Allow implicit return types. This should make it easier to change code
+    // as it doesn't require you to change a load of types in addition. In React
+    // code it would be doubly annoying, as we'd have to specify the return type
+    // of each functional component.
+    // This should not have an impact on type safety, as any input relying on a
+    // specific type should have that type specified.
     '@typescript-eslint/explicit-function-return-type': 'off',
+    '@typescript-eslint/explicit-module-boundary-types': 'off',
     // Allow explicit parameter/property types for consistency
     '@typescript-eslint/no-inferrable-types': 'off',
 
