@@ -54,8 +54,16 @@ module.exports = {
     // specific type should have that type specified.
     '@typescript-eslint/explicit-function-return-type': 'off',
     '@typescript-eslint/explicit-module-boundary-types': 'off',
-    // Allow explicit parameter/property types for consistency
-    '@typescript-eslint/no-inferrable-types': 'off',
+
+    // Allow explicit property/parameter types so they can be consistent with
+    // their sibling properties/parameters that have no default value.
+    '@typescript-eslint/no-inferrable-types': [
+      'warn',
+      {
+        ignoreParameters: true,
+        ignoreProperties: true,
+      },
+    ],
 
     // Standardise the user of type assertion style
     '@typescript-eslint/consistent-type-assertions': [
@@ -69,7 +77,7 @@ module.exports = {
     // endregion
 
     // region enforce emico components
-    
+
     'react/forbid-elements': ENABLE_EMICO_COMPONENT_LIBRARY
       ? [
           'error',
@@ -95,7 +103,7 @@ module.exports = {
         ]
       : 'off',
 
-    // endregion 
+    // endregion
 
     // region Code style
 
