@@ -181,6 +181,8 @@ module.exports = {
     'no-implicit-coercion': 'error',
 
     'import/no-useless-path-segments': 'error',
+    // Shorter, no useless var, and not really a big difference
+    'import/no-anonymous-default-export': 'off',
 
     // endregion
 
