@@ -25,8 +25,13 @@
     "eslint-plugin-react-hooks": "4.x",
     "eslint-plugin-you-dont-need-lodash-underscore": "^6.10.0"
   },
-  "peerDependencies": {
-    "typescript": "^3.9.3"
+  "devDependencies": {
+    "typescript": "*"
+  },
+  "peerDependenciesMeta": {
+    "typescript": {
+      "optional": true
+    }
   },
   "publishConfig": {
     "registry": "https://registry.npmjs.org"
