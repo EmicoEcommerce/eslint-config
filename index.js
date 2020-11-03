@@ -52,6 +52,18 @@ module.exports = {
     // NOTE: For the last one, prefer arr.forEach(func)/map/reduce instead.
     'no-plusplus': 'warn',
 
+    // Always prefer if-statements over expressions for both consistency and in general readability when paired with
+    // early returns.
+    'no-unused-expressions': 'off',
+    '@typescript-eslint/no-unused-expressions': [
+      'error',
+      {
+        allowShortCircuit: false, // a && a() might as well be a?.() or if (a) { a() }
+        allowTernary: false, // ternary expressions without returning the result - just use an if-statement
+        allowTaggedTemplates: false, // randomly placed strings are dead code
+      },
+    ],
+
     // TODO: Rule to encourage foreach/map/reduce over for
 
     // endregion
