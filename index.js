@@ -64,6 +64,26 @@ module.exports = {
       },
     ],
 
+    'no-restricted-syntax': [
+      'warn',
+      'WithStatement',
+      {
+        selector:
+          "CallExpression[callee.name='setTimeout'][arguments.length!=2]",
+        message: 'setTimeout must always be invoked with two arguments.',
+      },
+      {
+        selector: "CallExpression[callee.name='useLazyQuery']",
+        message:
+          'Prefer apolloClient.query in handlers over useLazyQuery hooks. The useLazyQuery introduce misdirection that makes code hard to follow, especially when the behavior gets more complicated. Error handling also improves using apolloClient.query.',
+      },
+      {
+        selector: "CallExpression[callee.name='useMutation']",
+        message:
+          'Prefer apolloClient.mutate in handlers over useMutation hooks. The useMutation introduce misdirection that makes code hard to follow, especially when the behavior gets more complicated. Error handling also improves using apolloClient.mutate.',
+      },
+    ],
+
     // TODO: Rule to encourage foreach/map/reduce over for
 
     // endregion
