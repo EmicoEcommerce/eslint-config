@@ -84,6 +84,10 @@ module.exports = {
       },
     ],
 
+    // if (!a > b) will convert a into a boolean since ! has precendence over >
+    // Note: @typescript-eslint disables this for TS files since TS also checks for this.
+    'no-unsafe-negation': ['error', { enforceForOrderingRelations: true }],
+
     // TODO: Rule to encourage foreach/map/reduce over for
 
     // endregion
