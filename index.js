@@ -35,6 +35,8 @@ module.exports = {
     // reasons why.
     // https://github.com/you-dont-need/You-Dont-Need-Lodash-Underscore/blob/master/lib/rules/all.js
     'plugin:you-dont-need-lodash-underscore/compatible',
+    // https://github.com/cypress-io/eslint-plugin-cypress#rules
+    'plugin:cypress/recommended',
   ],
   rules: {
     // region Syntax
