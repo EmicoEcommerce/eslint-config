@@ -5,7 +5,7 @@
   "repository": "https://github.com/EmicoEcommerce/eslint-config",
   "author": "Emico <info@emico.nl>",
   "license": "MIT",
-  "version": "3.4.0",
+  "version": "3.4.1",
   "files": [
     "index.js"
   ],
