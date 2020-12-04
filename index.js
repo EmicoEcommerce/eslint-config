@@ -13,6 +13,8 @@
 const ENABLE_PRETTIER = process.env.PRETTIER === 'true'
 const ENABLE_EMICO_COMPONENT_LIBRARY =
   process.env.EMICO_COMPONENT_LIBRARY === 'true'
+// When using GraphQL but not Apollo. See https://github.com/apollographql/eslint-plugin-graphql#common-options
+const GRAPHQL_ENVIRONMENT = process.env.GRAPHQL_ENVIRONMENT || 'apollo'
 
 const optionalRequire = (name) => {
   try {
@@ -70,36 +72,7 @@ module.exports = {
       ? [
           'error',
           {
-            validators: [
-              'ExecutableDefinitions',
-              'FieldsOnCorrectType',
-              'FragmentsOnCompositeTypes',
-              'KnownArgumentNames',
-              'KnownDirectives',
-              'KnownTypeNames',
-              'LoneAnonymousOperation',
-              'NoFragmentCycles',
-              'NoUndefinedVariables',
-              'NoUnusedVariables',
-              'OverlappingFieldsCanBeMerged',
-              'PossibleFragmentSpreads',
-              'ProvidedRequiredArguments',
-              'ScalarLeafs',
-              'SingleFieldSubscriptions',
-              'UniqueArgumentNames',
-              'UniqueDirectivesPerLocation',
-              'UniqueFragmentNames',
-              'UniqueInputFieldNames',
-              'UniqueOperationNames',
-              'UniqueVariableNames',
-              'ValuesOfCorrectType',
-              'VariablesAreInputTypes',
-              'VariablesInAllowedPosition',
-              // Can't be used when fragments are not colocated with queries
-              // See https://github.com/apollographql/eslint-plugin-graphql/issues/215
-              // 'KnownFragmentNames',
-              // 'NoUnusedFragments',
-            ],
+            env: GRAPHQL_ENVIRONMENT,
           },
         ]
       : 'off',
