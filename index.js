@@ -14,6 +14,32 @@ const ENABLE_PRETTIER = process.env.PRETTIER === 'true'
 const ENABLE_EMICO_COMPONENT_LIBRARY =
   process.env.EMICO_COMPONENT_LIBRARY === 'true'
 
+const optionalRequire = (name) => {
+  try {
+    return require(name)
+  } catch (er) {
+    return undefined
+  }
+}
+// Check if GraphQL config is available to determine if we can enable GraphQL
+// linting rules. graphql/template-strings throws when there's no config.
+const checkGraphqlConfig = () => {
+  const hasGraphql = optionalRequire('graphql')
+  if (!hasGraphql) {
+    return false
+  }
+  const graphqlConfig = optionalRequire('graphql-config')
+  if (!graphqlConfig) {
+    return false
+  }
+  const config = graphqlConfig.loadConfigSync({
+    throwOnMissing: false,
+    throwOnEmpty: false,
+  })
+  return Boolean(config)
+}
+const hasGraphqlConfig = checkGraphqlConfig()
+
 module.exports = {
   root: true,
   extends: [
@@ -38,7 +64,46 @@ module.exports = {
     // https://github.com/cypress-io/eslint-plugin-cypress#rules
     'plugin:cypress/recommended',
   ],
+  plugins: hasGraphqlConfig ? ['graphql'] : [],
   rules: {
+    'graphql/template-strings': hasGraphqlConfig
+      ? [
+          'error',
+          {
+            validators: [
+              'ExecutableDefinitions',
+              'FieldsOnCorrectType',
+              'FragmentsOnCompositeTypes',
+              'KnownArgumentNames',
+              'KnownDirectives',
+              'KnownTypeNames',
+              'LoneAnonymousOperation',
+              'NoFragmentCycles',
+              'NoUndefinedVariables',
+              'NoUnusedVariables',
+              'OverlappingFieldsCanBeMerged',
+              'PossibleFragmentSpreads',
+              'ProvidedRequiredArguments',
+              'ScalarLeafs',
+              'SingleFieldSubscriptions',
+              'UniqueArgumentNames',
+              'UniqueDirectivesPerLocation',
+              'UniqueFragmentNames',
+              'UniqueInputFieldNames',
+              'UniqueOperationNames',
+              'UniqueVariableNames',
+              'ValuesOfCorrectType',
+              'VariablesAreInputTypes',
+              'VariablesInAllowedPosition',
+              // Can't be used when fragments are not colocated with queries
+              // See https://github.com/apollographql/eslint-plugin-graphql/issues/215
+              // 'KnownFragmentNames',
+              // 'NoUnusedFragments',
+            ],
+          },
+        ]
+      : 'off',
+
     // region Syntax
 
     // Codebase consistency and ease of use
