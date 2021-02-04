@@ -92,6 +92,14 @@ module.exports = {
     // NOTE: For the last one, prefer arr.forEach(func)/map/reduce instead.
     'no-plusplus': 'warn',
 
+    // Disallow multiple declarations with one const/let statement.
+    'one-var': [
+      'error',
+      {
+        initialized: 'never',
+      },
+    ],
+
     // Always prefer if-statements over expressions for both consistency and in general readability when paired with
     // early returns.
     'no-unused-expressions': 'off',
