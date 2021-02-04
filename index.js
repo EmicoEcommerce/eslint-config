@@ -4,13 +4,14 @@
 // consistent codebase (in addition to Prettier), a low learning curve and
 // developer speed are important factors being considered.
 
-// Only run Prettier on the CLI and in CI. This way IDEs can do good linting and
-// show inline issues without Prettier warnings everywhere. We do want Prettier
-// included in the linting rather than as separate output because the formatting
-// of eslint is more readable, and they both indicate code issues that need to
-// be fixed. We just don't want Prettier to put a red underline underneath all
-// code not yet Prettier formatted.
-const ENABLE_PRETTIER = process.env.PRETTIER === 'true'
+// Only run code style checks on the CLI and in CI. Only rules that are
+// automatically fixable are included in this set.
+// With this toggle IDEs can do good linting and show code issues inline without
+// continuous code style warnings breaking up the flow.
+// We do want code style warnings included in the CLI/CI linting rather than as
+// separate output because the formatting of eslint is more readable, and they
+// both indicate issues in the way code is written that need to be fixed.
+const CHECK_CODESTYLE = process.env.CODE_STYLE === 'true'
 const ENABLE_EMICO_COMPONENT_LIBRARY =
   process.env.EMICO_COMPONENT_LIBRARY === 'true'
 // When using GraphQL but not Apollo. See https://github.com/apollographql/eslint-plugin-graphql#common-options
@@ -201,18 +202,23 @@ module.exports = {
     '@typescript-eslint/member-delimiter-style': 'off',
 
     'react/jsx-curly-brace-presence': [
-      'error',
+      'warn',
       { props: 'never', children: 'never' },
     ],
 
-    curly: ['error', 'all'],
+    curly: ['warn', 'all'],
 
     // When using a boolean attribute in JSX, you can set the attribute value to true or omit the value.
     // This rule will enforce one or the other to keep consistency in your code
-    'react/jsx-boolean-value': ['error', 'never'],
+    'react/jsx-boolean-value': ['warn', 'never'],
 
     // Suggests to convert () => { return x; } to () => x.
-    'arrow-body-style': ['error', 'as-needed'],
+    'arrow-body-style': [
+      // This is an annoying code style rule that can be fixed automatically.
+      // Only check it during the precommit fix script, and in CI.
+      CHECK_CODESTYLE ? 'warn' : 'off',
+      'as-needed',
+    ],
 
     // Do not require explicit visibility declarations for class members.
     '@typescript-eslint/explicit-member-accessibility': [
@@ -233,7 +239,7 @@ module.exports = {
     // Requires using either ‘T[]’ or ‘Array' for arrays.
     // enforces use of T[] if T is a simple type (primitive or type reference).
     '@typescript-eslint/array-type': [
-      2,
+      CHECK_CODESTYLE ? 'warn' : 'off',
       {
         default: 'array-simple',
       },
@@ -243,27 +249,41 @@ module.exports = {
     '@typescript-eslint/no-parameter-properties': 'error',
 
     'import/order': [
-      'error',
+      // This is an annoying code style rule that can be fixed automatically.
+      // Only check it during the precommit fix script, and in CI.
+      CHECK_CODESTYLE ? 'warn' : 'off',
       {
         groups: [
           ['external', 'builtin'],
           'internal',
           ['parent', 'sibling', 'index'],
         ],
-        'newlines-between': 'always-and-inside-groups',
+        pathGroups: [
+          {
+            pattern: '@emico/**',
+            group: 'internal',
+            position: 'after',
+          },
+        ],
+        pathGroupsExcludedImportTypes: ['builtin'],
+        'newlines-between': 'always',
+        alphabetize: {
+          order: 'asc',
+          caseInsensitive: true,
+        },
       },
     ],
 
-    'no-implicit-coercion': 'error',
+    'no-implicit-coercion': 'warn',
 
-    'import/no-useless-path-segments': 'error',
+    'import/no-useless-path-segments': 'warn',
     // Shorter, no useless var, and not really a big difference
     'import/no-anonymous-default-export': 'off',
 
     // endregion
 
     // Every dependency should be in the package.json
-    'import/no-extraneous-dependencies': 'error',
+    'import/no-extraneous-dependencies': 'warn',
 
     // For example see https://git.emico.nl/magento-2/react-components/commit/28bea2e284ee51ca3f7db9a17894d50c68250789
     'no-restricted-imports': [
@@ -284,7 +304,7 @@ module.exports = {
     // can do whatever is quickest.
     'react/no-unescaped-entities': 0,
 
-    'prettier/prettier': ENABLE_PRETTIER ? 'error' : 'off',
+    'prettier/prettier': CHECK_CODESTYLE ? 'warn' : 'off',
   },
   overrides: [
     {

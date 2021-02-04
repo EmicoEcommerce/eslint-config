@@ -38,5 +38,6 @@ That's it! You can override the settings by editing the `.eslintrc.json` file. L
 
 These options can be enabled/disabled using env variables.
 
-`PRETTIER` Enable or disable prettier rules in eslint
+`CODE_STYLE` Enable or disable code style rules in eslint. These rules are
+automatically fixable, so this can be run in a precommit hook with `--fix`.
 `EMICO_COMPONENT_LIBRARY` Enable or disable Emico internal component library rules
