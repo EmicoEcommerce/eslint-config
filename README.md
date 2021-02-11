@@ -41,3 +41,11 @@ These options can be enabled/disabled using env variables.
 `CODE_STYLE` Enable or disable code style rules in eslint. These rules are
 automatically fixable, so this can be run in a precommit hook with `--fix`.
 `EMICO_COMPONENT_LIBRARY` Enable or disable Emico internal component library rules
+
+### Visual Studio Code
+
+If you want to see these rules in VSCode too, you can enable them by opening vscode from a CLI with those env variables set:
+
+```
+CODE_STYLE=true EMICO_COMPONENT_LIBRARY=true code .
+```
