@@ -14,6 +14,8 @@
     "@typescript-eslint/parser": "4.x",
     "babel-eslint": "10.x",
     "confusing-browser-globals": "^1.0.9",
+    "dotenv": "^8.2.0",
+    "dotenv-expand": "^5.1.0",
     "eslint": "7.x",
     "eslint-config-prettier": "^6.9.0",
     "eslint-config-react-app": "^6.0.0",
