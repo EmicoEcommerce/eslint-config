@@ -4,7 +4,7 @@
 // consistent codebase (in addition to Prettier), a low learning curve and
 // developer speed are important factors being considered.
 
-require('./env')
+require('dotenv-flow').config()
 
 // Only run code style checks on the CLI and in CI. Only rules that are
 // automatically fixable are included in this set.
