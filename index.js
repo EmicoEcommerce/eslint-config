@@ -121,6 +121,11 @@ module.exports = {
       'warn',
       'WithStatement',
       {
+        selector: 'ForInStatement',
+        message:
+          'for..in loops iterate over the entire prototype chain, which is virtually never what you want. Use Object.{keys,values,entries}, and iterate over the resulting array or use for..of.',
+      },
+      {
         selector:
           "CallExpression[callee.name='setTimeout'][arguments.length!=2]",
         message: 'setTimeout must always be invoked with two arguments.',
