@@ -59,6 +59,10 @@ const hasNextJS = checkNextJS()
 
 module.exports = {
   root: true,
+  plugins: [
+    ...(hasGraphqlConfig ? ['graphql'] : []),
+    ...(hasNextJS ? ['@next/eslint-plugin-next'] : []),
+  ],
   extends: (hasNextJS
     ? ['next', 'next/core-web-vitals']
     : ['react-app']
@@ -83,7 +87,6 @@ module.exports = {
     // https://github.com/cypress-io/eslint-plugin-cypress#rules
     'plugin:cypress/recommended',
   ]),
-  plugins: hasGraphqlConfig ? ['graphql'] : [],
   rules: {
     'graphql/template-strings': hasGraphqlConfig
       ? [
