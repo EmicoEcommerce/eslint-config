@@ -47,10 +47,26 @@ const checkGraphqlConfig = () => {
 }
 const hasGraphqlConfig = checkGraphqlConfig()
 
+// Check if NextJS is available to determine if we can enable NextJS
+// linting rules.
+const checkNextJS = () => {
+  const hasNextJS = optionalRequire('next')
+  if (!hasNextJS) {
+    return false
+  }
+}
+const hasNextJS = checkNextJS()
+
 module.exports = {
   root: true,
-  extends: [
-    'react-app',
+  plugins: [
+    ...(hasGraphqlConfig ? ['graphql'] : []),
+    ...(hasNextJS ? ['@next/eslint-plugin-next'] : []),
+  ],
+  extends: (hasNextJS
+    ? ['next', 'next/core-web-vitals']
+    : ['react-app']
+  ).concat([
     // https://github.com/eslint/eslint/blob/master/conf/eslint-recommended.js
     'eslint:recommended',
     // https://github.com/yannickcr/eslint-plugin-react/blob/master/index.js#L115
@@ -70,8 +86,7 @@ module.exports = {
     'plugin:you-dont-need-lodash-underscore/compatible',
     // https://github.com/cypress-io/eslint-plugin-cypress#rules
     'plugin:cypress/recommended',
-  ],
-  plugins: hasGraphqlConfig ? ['graphql'] : [],
+  ]),
   rules: {
     'graphql/template-strings': hasGraphqlConfig
       ? [
@@ -210,17 +225,23 @@ module.exports = {
                 message:
                   'use <Image> instead so that the correct image CDN is used',
               },
-              {
-                element: 'a',
-                message:
-                  'use <Link> instead to make sure internal linking works, and analytics is working as expected',
-              },
+
               {
                 element: 'button',
                 message:
                   'use <ButtonPrimary> or <ButtonSecondary> instead to make sure the correct styling is used, or use <ButtonUnstyled> as a base',
               },
-            ],
+            ].concat(
+              hasNextJS
+                ? []
+                : [
+                    {
+                      element: 'a',
+                      message:
+                        'use <Link> instead to make sure internal linking works, and analytics is working as expected',
+                    },
+                  ],
+            ),
           },
         ]
       : 'off',
@@ -338,6 +359,8 @@ module.exports = {
     'react/no-unescaped-entities': 0,
 
     'prettier/prettier': CHECK_CODESTYLE ? 'warn' : 'off',
+    'jsx-a11y/anchor-is-valid': hasNextJS ? 'off' : 'warn',
+    'react/react-in-jsx-scope': hasNextJS ? 'off' : 'warn',
   },
   overrides: [
     {
