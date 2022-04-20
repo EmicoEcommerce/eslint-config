@@ -18,6 +18,10 @@ require('dotenv-flow').config({
 const CHECK_CODESTYLE = process.env.CODE_STYLE === 'true'
 const ENABLE_EMICO_COMPONENT_LIBRARY =
   process.env.EMICO_COMPONENT_LIBRARY === 'true'
+
+const NO_TYPESCRIPT =
+  process.env.NO_TYPESCRIPT === 'true'
+
 // When using GraphQL but not Apollo. See https://github.com/apollographql/eslint-plugin-graphql#common-options
 const GRAPHQL_ENVIRONMENT = process.env.GRAPHQL_ENVIRONMENT || 'apollo'
 
@@ -71,10 +75,13 @@ module.exports = {
     'eslint:recommended',
     // https://github.com/yannickcr/eslint-plugin-react/blob/master/index.js#L115
     'plugin:react/recommended',
-    // https://github.com/typescript-eslint/typescript-eslint/blob/master/packages/eslint-plugin/src/configs/eslint-recommended.ts
-    'plugin:@typescript-eslint/eslint-recommended',
-    // https://github.com/typescript-eslint/typescript-eslint/blob/master/packages/eslint-plugin/src/configs/recommended.json
-    'plugin:@typescript-eslint/recommended',
+    
+    ...(NO_TYPESCRIPT ? [] : [
+      // https://github.com/typescript-eslint/typescript-eslint/blob/master/packages/eslint-plugin/src/configs/eslint-recommended.ts
+      'plugin:@typescript-eslint/eslint-recommended', 
+      // https://github.com/typescript-eslint/typescript-eslint/blob/master/packages/eslint-plugin/src/configs/recommended.json
+      'plugin:@typescript-eslint/recommended'
+    ]),
     // We enable the prettier plugin even if ENABLE_PRETTIER is false since it
     // also disables rules that would conflict with Prettier. We need these
     // overrides even if we're ignoring Prettier rule problems.
